@@ -117,5 +117,7 @@ vizdoom.egg-info/
 # MacOS
 .DS_Store
 /build/
-/venv/
+
+# We want to include our venv on GH
+#/venv/
 /.eggs/
