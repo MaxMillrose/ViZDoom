@@ -115,11 +115,17 @@ The object allows sending actions to the game, getting the game state, etc.
 .. autofunction:: vizdoom.DoomGame.set_mode
 .. autofunction:: vizdoom.DoomGame.get_ticrate
 .. autofunction:: vizdoom.DoomGame.set_ticrate
+.. autofunction:: vizdoom.DoomGame.get_vizdoom_path
 .. autofunction:: vizdoom.DoomGame.set_vizdoom_path
+.. autofunction:: vizdoom.DoomGame.get_doom_game_path
 .. autofunction:: vizdoom.DoomGame.set_doom_game_path
+.. autofunction:: vizdoom.DoomGame.get_doom_scenario_path
 .. autofunction:: vizdoom.DoomGame.set_doom_scenario_path
+.. autofunction:: vizdoom.DoomGame.get_doom_map
 .. autofunction:: vizdoom.DoomGame.set_doom_map
+.. autofunction:: vizdoom.DoomGame.get_doom_skill
 .. autofunction:: vizdoom.DoomGame.set_doom_skill
+.. autofunction:: vizdoom.DoomGame.get_doom_config_path
 .. autofunction:: vizdoom.DoomGame.set_doom_config_path
 .. autofunction:: vizdoom.DoomGame.get_seed
 .. autofunction:: vizdoom.DoomGame.set_seed
