@@ -111,6 +111,7 @@ The object allows sending actions to the game, getting the game state, etc.
 
 ```{eval-rst}
 .. autofunction:: vizdoom.DoomGame.load_config
+.. autofunction:: vizdoom.DoomGame.set_config
 .. autofunction:: vizdoom.DoomGame.get_mode
 .. autofunction:: vizdoom.DoomGame.set_mode
 .. autofunction:: vizdoom.DoomGame.get_ticrate
