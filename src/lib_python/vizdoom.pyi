@@ -1003,6 +1003,8 @@ class DoomGame:
         `False` if the file contained errors.
 
         If the file relative path is given, it will be searched for in the following order: ``<current directory>``, ``<current directory>/scenarios/``, ``<ViZDoom library location>/scenarios/``.
+
+        Relative paths in the config file (e.g. for ``doom_scenario_path``) are resolved relative to the config file location.
         """
 
     def make_action(self, action: typing.Any, tics: int = 1) -> float:
@@ -1234,6 +1236,39 @@ class DoomGame:
         Default value: 0 (no constraint, infinity).
 
         Has no effect when the game is running.
+        """
+
+    def set_config(self, config: typing.Union[str, dict[str, tying.Any]]) -> bool:
+        """
+        Sets configuration from a config string or dictionary (Python only).
+
+        This method accepts either a configuration string (in the same format as .cfg files)
+        or a Python dictionary with configuration key-value pairs.
+
+        When using a Python dictionary:
+        - Keys should be configuration parameter names (e.g., 'screen_resolution', 'doom_skill')
+        - Values can be:
+          - Primitive types: str, int, float, bool
+          - Enums: Button, GameVariable, ScreenResolution, ScreenFormat, SamplingRate, Mode, AutomapMode
+          - Lists: for 'available_buttons' and 'available_game_variables'
+
+        Relative paths (e.g., for 'doom_scenario_path') are resolved relative to the current working directory.
+
+        Python example:
+        ```
+            game.set_config({
+                'screen_resolution': ScreenResolution.RES_640X480,
+                'screen_format': ScreenFormat.CRCGCB,
+                'doom_skill': 5,
+                'available_buttons': [Button.MOVE_LEFT, Button.MOVE_RIGHT, Button.ATTACK],
+                'available_game_variables': [GameVariable.AMMO2],
+                'living_reward': -1
+            })
+        ```
+
+        Returns ``True`` if the configuration was successfully applied, ``False`` if errors occurred.
+
+        Note: added in 1.3.0
         """
 
     def set_console_enabled(self, console: bool) -> None:
