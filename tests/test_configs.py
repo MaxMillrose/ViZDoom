@@ -26,10 +26,16 @@ config_values = {
     "death_penalty": 100,
     "death_reward": -100,
     "depth_buffer_enabled": True,
-    "doom_config_path": "test/path/config.cfg",
-    "doom_game_path": "test/path/doom.wad",
+    "doom_config_path": "test/path/config.cfg"
+    if os.name != "nt"
+    else "test\\path\\config.cfg",
+    "doom_game_path": "test/path/doom.wad"
+    if os.name != "nt"
+    else "test\\path\\doom.wad",
     "doom_map": "map02",
-    "doom_scenario_path": "test/path/scenario.cfg",
+    "doom_scenario_path": "test/path/scenario.cfg"
+    if os.name != "nt"
+    else "test\\path\\scenario.cfg",
     "doom_skill": 4,
     "episode_start_time": 2,
     "episode_timeout": 10,
@@ -65,7 +71,7 @@ config_values = {
     "seed": 1993,
     "sound_enabled": True,
     "ticrate": 70,
-    "vizdoom_path": "test/path/vizdoom",
+    "vizdoom_path": "test/path/vizdoom" if os.name != "nt" else "test\\path\\vizdoom",
     "window_visible": True,
 }
 
