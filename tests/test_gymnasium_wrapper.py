@@ -15,6 +15,25 @@ from vizdoom import gymnasium_wrapper  # noqa
 from vizdoom.gymnasium_wrapper.base_gymnasium_env import VizdoomEnv
 
 
+# Ensure pytest.mark.parametrize decorator works without pytest
+try:
+    import pytest
+except ImportError:
+
+    class MockMark:
+        def parametrize(self, *args, **kwargs):
+            def decorator(func):
+                return func
+
+            return decorator
+
+    class MockPytest:
+        mark = MockMark()
+
+    pytest = MockPytest()
+    del MockMark, MockPytest
+
+
 vizdoom_envs = [
     env
     for env in [env_spec.id for env_spec in gymnasium.envs.registry.values()]  # type: ignore
@@ -31,70 +50,83 @@ envs_with_audio = [
 ]
 buffers = ["screen", "depth", "labels", "automap", "audio", "notifications"]
 
+fp32_act_space = dict(
+    low=np.finfo(np.float32).min, high=np.finfo(np.float32).max, dtype=np.float32
+)
+tri_channel_screen_obs_space = Box(0, 255, (240, 320, 3), dtype=np.uint8)
+single_channel_screen_obs_space = Box(0, 255, (240, 320, 1), dtype=np.uint8)
+audio_obs_space = Box(
+    -32768, 32767, (int(44100 * 1 / 35 * 1), 2), dtype=np.int16
+)  # sampling rate = 44100, frame_skip = 1
+notifications_obs_space = Text(min_length=0, max_length=32768)
+
+color_screen: dict[str, gymnasium.Space] = {"screen": tri_channel_screen_obs_space}
+gray_screen: dict[str, gymnasium.Space] = {"screen": single_channel_screen_obs_space}
+depth_buffer: dict[str, gymnasium.Space] = {"depth": single_channel_screen_obs_space}
+labels_buffer: dict[str, gymnasium.Space] = {"labels": single_channel_screen_obs_space}
+color_automap: dict[str, gymnasium.Space] = {"automap": tri_channel_screen_obs_space}
+gray_automap: dict[str, gymnasium.Space] = {"automap": single_channel_screen_obs_space}
+notifications: dict[str, gymnasium.Space] = {"notifications": notifications_obs_space}
+audio_buffer: dict[str, gymnasium.Space] = {"audio": audio_obs_space}
+
 
 # Testing with different non-default kwargs (since each has a different obs space)
 # should give warning forcing RGB24 screen type
-def test_gymnasium_wrapper():
-    print("Testing Gymnasium wrapper compatibility with gymnasium API")
-    for env_name in vizdoom_envs:
-        print(f"  Env: {env_name}")
+@pytest.mark.parametrize("env_name", vizdoom_envs)
+def test_gymnasium_wrapper(env_name: str):
+    print(f"  Env: {env_name}")
 
-        # Skip environments with animated textures and audio
-        # as they might render different states for the same seeds
-        # and audio might render slightly different
-        if env_name.split("-")[0] in envs_with_animated_textures + envs_with_audio:
-            continue
+    # Skip environments with animated textures and audio
+    # as they might render different states for the same seeds
+    # and audio might render slightly different
+    if env_name.split("-")[0] in envs_with_animated_textures + envs_with_audio:
+        return
 
-        for frame_skip in [1, 4]:
-            env = gymnasium.make(env_name, frame_skip=frame_skip)
+    for frame_skip in [1, 4]:
+        env = gymnasium.make(env_name, frame_skip=frame_skip)
 
-            # Test if env adheres to Gymnasium API
-            check_env(env.unwrapped, skip_render_check=True)
+        # Test if env adheres to Gymnasium API
+        check_env(env.unwrapped, skip_render_check=True)
 
-            ob_space = env.observation_space
-            act_space = env.action_space
-            obs, _ = env.reset()
-            assert ob_space.contains(obs), f"Reset observation: {obs!r} not in space"
+        ob_space = env.observation_space
+        act_space = env.action_space
+        obs, _ = env.reset()
+        assert ob_space.contains(obs), f"Reset observation: {obs!r} not in space"
 
-            a = act_space.sample()
-            observation, reward, terminated, truncated, _info = env.step(a)
-            assert ob_space.contains(
-                observation
-            ), f"Step observation: {observation!r} not in space"
-            assert np.isscalar(reward), f"{reward} is not a scalar for {env}"
-            assert isinstance(
-                terminated, bool
-            ), f"Expected {terminated} to be a boolean"
-            assert isinstance(
-                terminated, bool
-            ), f"Expected {terminated} to be a boolean"
-            assert isinstance(truncated, bool), f"Expected {truncated} to be a boolean"
+        a = act_space.sample()
+        observation, reward, terminated, truncated, _info = env.step(a)
+        assert ob_space.contains(
+            observation
+        ), f"Step observation: {observation!r} not in space"
+        assert np.isscalar(reward), f"{reward} is not a scalar for {env}"
+        assert isinstance(terminated, bool), f"Expected {terminated} to be a boolean"
+        assert isinstance(terminated, bool), f"Expected {terminated} to be a boolean"
+        assert isinstance(truncated, bool), f"Expected {truncated} to be a boolean"
 
-            env.close()
+        env.close()
 
 
 # Testing obs on terminal state (terminal state is handled differently)
 # should give warning forcing RGB24 screen type
-def test_gymnasium_wrapper_terminal_state():
-    print("Testing Gymnasium rollout (checking terminal state)")
-    for env_name in vizdoom_envs:
-        print(f"  Env: {env_name}")
+@pytest.mark.parametrize("env_name", vizdoom_envs)
+def test_gymnasium_wrapper_terminal_state(env_name: str):
+    print(f"  Env: {env_name}")
 
-        for frame_skip in [1, 4]:
-            env = gymnasium.make(env_name, frame_skip=frame_skip, max_buttons_pressed=0)
-            obs = env.reset()
-            terminated = False
-            truncated = False
+    for frame_skip in [1, 4]:
+        env = gymnasium.make(env_name, frame_skip=frame_skip, max_buttons_pressed=0)
+        obs = env.reset()
+        terminated = False
+        truncated = False
+        done = terminated or truncated
+        while not done:
+            a = env.action_space.sample()
+            (obs, _reward, terminated, truncated, _info) = env.step(a)
             done = terminated or truncated
-            while not done:
-                a = env.action_space.sample()
-                (obs, _reward, terminated, truncated, _info) = env.step(a)
-                done = terminated or truncated
-                if done:
-                    break
+            if done:
+                break
 
-            assert env.observation_space.contains(obs)
-            env.close()
+        assert env.observation_space.contains(obs)
+        env.close()
 
 
 def test_gymnasium_wrapper_truncated_state():
@@ -122,79 +154,39 @@ def test_gymnasium_wrapper_truncated_state():
 
 # Testing various observation spaces
 # Using both screen types `(GRAY8, RGB24)` for various combinations of buffers `(screen|depth|labels|automap)`
-def test_gymnasium_wrapper_obs_space():
-    print("Testing Gymnasium wrapper observation spaces")
-    env_configs = [
-        "basic_rgb_i_1_3",
-        "basic_g8_i_1_0",
-        "basic_g8_i_1_0_wNotifications",
-        "basic_g8_i_1_0_wAudio",
-        "basic_g8_idla_4_2",
-        "basic_g8_idl_3_1",
-        "basic_rgb_id_2_0",
-        "basic_rgb_idla_0_1",
-    ]
-    tri_channel_screen_obs_space = Box(0, 255, (240, 320, 3), dtype=np.uint8)
-    single_channel_screen_obs_space = Box(0, 255, (240, 320, 1), dtype=np.uint8)
-    audio_obs_space = Box(
-        -32768, 32767, (int(44100 * 1 / 35 * 1), 2), dtype=np.int16
-    )  # sampling rate = 44100, frame_skip = 1
-    notifications_obs_space = Text(min_length=0, max_length=32768)
-    observation_spaces = [
-        Dict({"screen": tri_channel_screen_obs_space}),
-        Dict({"screen": single_channel_screen_obs_space}),
-        Dict(
-            {
-                "screen": single_channel_screen_obs_space,
-                "notifications": notifications_obs_space,
-            }
+@pytest.mark.parametrize(
+    "env_config,obs_space",
+    [
+        ("basic_rgb_i_1_3", Dict(color_screen)),
+        ("basic_g8_i_1_0", Dict(gray_screen)),
+        ("basic_g8_i_1_0_wNotifications", Dict(gray_screen | notifications)),
+        ("basic_g8_i_1_0_wAudio", Dict(gray_screen | audio_buffer)),
+        (
+            "basic_g8_idla_4_2",
+            Dict(gray_screen | depth_buffer | labels_buffer | gray_automap),
         ),
-        Dict({"screen": single_channel_screen_obs_space, "audio": audio_obs_space}),
-        Dict(
-            {
-                "screen": single_channel_screen_obs_space,
-                "depth": single_channel_screen_obs_space,
-                "labels": single_channel_screen_obs_space,
-                "automap": single_channel_screen_obs_space,
-            }
+        ("basic_g8_idl_3_1", Dict(gray_screen | depth_buffer | labels_buffer)),
+        ("basic_rgb_id_2_0", Dict(color_screen | depth_buffer)),
+        (
+            "basic_rgb_idla_0_1",
+            Dict(color_screen | depth_buffer | labels_buffer | color_automap),
         ),
-        Dict(
-            {
-                "screen": single_channel_screen_obs_space,
-                "depth": single_channel_screen_obs_space,
-                "labels": single_channel_screen_obs_space,
-            }
-        ),
-        Dict(
-            {
-                "screen": tri_channel_screen_obs_space,
-                "depth": single_channel_screen_obs_space,
-            }
-        ),
-        Dict(
-            {
-                "screen": tri_channel_screen_obs_space,
-                "depth": single_channel_screen_obs_space,
-                "labels": single_channel_screen_obs_space,
-                "automap": tri_channel_screen_obs_space,
-            }
-        ),
-    ]
-
-    for i in range(len(env_configs)):
-        env = VizdoomEnv(
-            config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
-            frame_skip=1,
-            max_buttons_pressed=0,
-        )
-        assert env.observation_space == observation_spaces[i], (
-            f"Incorrect observation space: {env.observation_space!r}, "
-            f"should be: {observation_spaces[i]!r}"
-        )
-        obs, _ = env.reset()
-        assert env.observation_space.contains(
-            obs
-        ), f"Step observation: {obs!r} not in space"
+    ],
+)
+def test_gymnasium_wrapper_obs_space(env_config: str, obs_space: Dict):
+    env = VizdoomEnv(
+        config_file=os.path.join(test_env_configs, env_config + ".cfg"),
+        frame_skip=1,
+        max_buttons_pressed=0,
+    )
+    assert env.observation_space == obs_space, (
+        f"Incorrect observation space: {env.observation_space!r}, "
+        f"should be: {obs_space!r}"
+    )
+    obs, _ = env.reset()
+    assert env.observation_space.contains(
+        obs
+    ), f"Step observation: {obs!r} not in space"
 
 
 def _compare_action_spaces(env, expected_action_space):
@@ -212,8 +204,8 @@ def _compare_action_spaces(env, expected_action_space):
 
 
 # Testing all possible action space combinations
-def test_gymnasium_wrapper_action_space():
-    print("Testing Gymnasium wrapper action spaces")
+@pytest.mark.parametrize("i", range(6))
+def test_gymnasium_wrapper_action_space(i: int):
     env_configs = [
         "basic_rgb_i_1_3",
         "basic_g8_i_1_0",
@@ -227,44 +219,24 @@ def test_gymnasium_wrapper_action_space():
         Dict(
             {
                 "binary": MultiBinary(1),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (3,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(3,), **fp32_act_space),  # type: ignore
             }
         ),
         MultiBinary(1),
         Dict(
             {
                 "binary": MultiBinary(4),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (2,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(2,), **fp32_act_space),  # type: ignore
             }
         ),
         Dict(
             {
                 "binary": MultiBinary(3),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (1,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(1,), **fp32_act_space),  # type: ignore
             }
         ),
         MultiBinary(2),
-        Box(
-            np.finfo(np.float32).min,
-            np.finfo(np.float32).max,
-            (1,),
-            dtype=np.float32,
-        ),
+        Box(shape=(1,), **fp32_act_space),  # type: ignore
     ]
 
     # max_button_pressed = 0, binary action space is MultiBinary or MultiDiscrete
@@ -272,44 +244,24 @@ def test_gymnasium_wrapper_action_space():
         Dict(
             {
                 "binary": MultiDiscrete([2]),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (3,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(3,), **fp32_act_space),  # type: ignore
             }
         ),
         MultiDiscrete([2]),
         Dict(
             {
                 "binary": MultiDiscrete([2, 2, 2, 2]),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (2,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(2,), **fp32_act_space),  # type: ignore
             }
         ),
         Dict(
             {
                 "binary": MultiDiscrete([2, 2, 2]),
-                "continuous": Box(
-                    np.finfo(np.float32).min,
-                    np.finfo(np.float32).max,
-                    (1,),
-                    dtype=np.float32,
-                ),
+                "continuous": Box(shape=(1,), **fp32_act_space),  # type: ignore
             }
         ),
         MultiDiscrete([2, 2]),
-        Box(
-            np.finfo(np.float32).min,
-            np.finfo(np.float32).max,
-            (1,),
-            dtype=np.float32,
-        ),
+        Box(shape=(1,), **fp32_act_space),  # type: ignore
     ]
 
     # max_button_pressed = 1, binary action space is Discrete(num_binary_buttons + 1)
@@ -318,44 +270,24 @@ def test_gymnasium_wrapper_action_space():
             Dict(
                 {
                     "binary": Discrete(2),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (3,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(3,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(2),
             Dict(
                 {
                     "binary": Discrete(5),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (2,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(2,), **fp32_act_space),  # type: ignore
                 }
             ),
             Dict(
                 {
                     "binary": Discrete(4),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (1,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(1,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(3),
-            Box(
-                np.finfo(np.float32).min,
-                np.finfo(np.float32).max,
-                (1,),
-                dtype=np.float32,
-            ),
+            Box(shape=(1,), **fp32_act_space),  # type: ignore
         ],
         # max_button_pressed = 2, binary action space is Discrete(m) m=all combinations
         # indices=[0,1] should give warning clipping max_buttons_pressed to 1
@@ -363,44 +295,24 @@ def test_gymnasium_wrapper_action_space():
             Dict(
                 {
                     "binary": Discrete(2),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (3,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(3,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(2),
             Dict(
                 {
                     "binary": Discrete(11),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (2,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(2,), **fp32_act_space),  # type: ignore
                 }
             ),
             Dict(
                 {
                     "binary": Discrete(7),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (1,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(1,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(4),
-            Box(
-                np.finfo(np.float32).min,
-                np.finfo(np.float32).max,
-                (1,),
-                dtype=np.float32,
-            ),
+            Box(shape=(1,), **fp32_act_space),  # type: ignore
         ],
         # max_button_pressed = 3, binary action space is Discrete(m) m=all combinations
         # indices=[0,1,4] should give warning clipping max_buttons_pressed to 1 or 2
@@ -408,74 +320,50 @@ def test_gymnasium_wrapper_action_space():
             Dict(
                 {
                     "binary": Discrete(2),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (3,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(3,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(2),
             Dict(
                 {
                     "binary": Discrete(15),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (2,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(2,), **fp32_act_space),  # type: ignore
                 }
             ),
             Dict(
                 {
                     "binary": Discrete(8),
-                    "continuous": Box(
-                        np.finfo(np.float32).min,
-                        np.finfo(np.float32).max,
-                        (1,),
-                        dtype=np.float32,
-                    ),
+                    "continuous": Box(shape=(1,), **fp32_act_space),  # type: ignore
                 }
             ),
             Discrete(4),
-            Box(
-                np.finfo(np.float32).min,
-                np.finfo(np.float32).max,
-                (1,),
-                dtype=np.float32,
-            ),
+            Box(shape=(1,), **fp32_act_space),  # type: ignore
         ],
     ]
 
-    for i in range(len(env_configs)):
-        env = VizdoomEnv(
-            config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
-            frame_skip=1,
-            max_buttons_pressed=0,
-            use_multi_binary_action_space=True,
-        )
-        _compare_action_spaces(env, multi_binary_action_spaces[i])
+    env = VizdoomEnv(
+        config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
+        frame_skip=1,
+        max_buttons_pressed=0,
+        use_multi_binary_action_space=True,
+    )
+    _compare_action_spaces(env, multi_binary_action_spaces[i])
 
-        env = VizdoomEnv(
-            config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
-            frame_skip=1,
-            max_buttons_pressed=0,
-            use_multi_binary_action_space=False,
-        )
-        _compare_action_spaces(env, multi_discrete_action_spaces[i])
+    env = VizdoomEnv(
+        config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
+        frame_skip=1,
+        max_buttons_pressed=0,
+        use_multi_binary_action_space=False,
+    )
+    _compare_action_spaces(env, multi_discrete_action_spaces[i])
 
     for max_button_pressed in range(1, 4):
-        for i in range(len(env_configs)):
-            env = VizdoomEnv(
-                config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
-                frame_skip=1,
-                max_buttons_pressed=max_button_pressed,
-            )
-            _compare_action_spaces(
-                env, discrete_action_spaces[max_button_pressed - 1][i]
-            )
+        env = VizdoomEnv(
+            config_file=os.path.join(test_env_configs, env_configs[i] + ".cfg"),
+            frame_skip=1,
+            max_buttons_pressed=max_button_pressed,
+        )
+        _compare_action_spaces(env, discrete_action_spaces[max_button_pressed - 1][i])
 
 
 def _compare_envs(
@@ -544,47 +432,82 @@ def _compare_envs(
     env2.close()
 
 
-def test_gymnasium_wrapper_pickle():
-    print("Testing Gymnasium wrapper pickling (EzPickle).")
-    for env_name in vizdoom_envs:
-        print(f"  Env: {env_name}")
+@pytest.mark.parametrize("env_name", vizdoom_envs)
+def test_gymnasium_wrapper_pickle(env_name: str):
+    print(f"  Env: {env_name}")
 
-        env1 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
-        env2 = pickle.loads(pickle.dumps(env1))
+    env1 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
+    env2 = pickle.loads(pickle.dumps(env1))
 
-        _compare_envs(
-            env1,
-            env2,
-            env1_name="Original",
-            env2_name="Pickled",
-            seed=1993,
-            compare_buffers=(env_name.split("-")[0] not in envs_with_animated_textures),
-        )
+    _compare_envs(
+        env1,
+        env2,
+        env1_name="Original",
+        env2_name="Pickled",
+        seed=1993,
+        compare_buffers=(
+            env_name.split("-")[0] not in envs_with_animated_textures + envs_with_audio
+        ),
+    )
 
 
-def test_gymnasium_wrapper_seed():
-    print("Testing gymnasium wrapper seeding.")
-    for env_name in vizdoom_envs:
-        print(f"  Env: {env_name}")
+@pytest.mark.parametrize("env_name", vizdoom_envs)
+def test_gymnasium_wrapper_seed(env_name: str):
+    print(f"  Env: {env_name}")
 
-        env1 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
-        env2 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
+    env1 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
+    env2 = gymnasium.make(env_name, frame_skip=1, max_buttons_pressed=0)
 
-        _compare_envs(
-            env1,
-            env2,
-            env1_name="First",
-            env2_name="Second",
-            seed=1993,
-            compare_buffers=(env_name.split("-")[0] not in envs_with_animated_textures),
-        )
+    _compare_envs(
+        env1,
+        env2,
+        env1_name="First",
+        env2_name="Second",
+        seed=1993,
+        compare_buffers=(
+            env_name.split("-")[0] not in envs_with_animated_textures + envs_with_audio
+        ),
+    )
 
 
 if __name__ == "__main__":
-    test_gymnasium_wrapper()
-    test_gymnasium_wrapper_terminal_state()
+    print("Testing Gymnasium wrapper compatibility with gymnasium API")
+    for env_name in vizdoom_envs:
+        test_gymnasium_wrapper(env_name)
+
+    print("Testing Gymnasium rollout (checking terminal state)")
+    for env_name in vizdoom_envs:
+        test_gymnasium_wrapper_terminal_state(env_name)
+
     test_gymnasium_wrapper_truncated_state()
-    test_gymnasium_wrapper_action_space()
-    test_gymnasium_wrapper_obs_space()
-    test_gymnasium_wrapper_pickle()
-    test_gymnasium_wrapper_seed()
+
+    print("Testing Gymnasium wrapper action spaces")
+    for i in range(6):
+        test_gymnasium_wrapper_action_space(i)
+
+    print("Testing Gymnasium wrapper observation spaces")
+    for env_config, obs_space in [
+        ("basic_rgb_i_1_3", Dict(color_screen)),
+        ("basic_g8_i_1_0", Dict(gray_screen)),
+        ("basic_g8_i_1_0_wNotifications", Dict(gray_screen | notifications)),
+        ("basic_g8_i_1_0_wAudio", Dict(gray_screen | audio_buffer)),
+        (
+            "basic_g8_idla_4_2",
+            Dict(gray_screen | depth_buffer | labels_buffer | gray_automap),
+        ),
+        ("basic_g8_idl_3_1", Dict(gray_screen | depth_buffer | labels_buffer)),
+        ("basic_rgb_id_2_0", Dict(color_screen | depth_buffer)),
+        (
+            "basic_rgb_idla_0_1",
+            Dict(color_screen | depth_buffer | labels_buffer | color_automap),
+        ),
+    ]:
+        test_gymnasium_wrapper_obs_space(env_config, obs_space)
+
+    print("Testing Gymnasium wrapper pickling (EzPickle).")
+    for env_name in vizdoom_envs:
+        test_gymnasium_wrapper_pickle(env_name)
+
+    print("Testing gymnasium wrapper seeding.")
+    for env_name in vizdoom_envs:
+        test_gymnasium_wrapper_seed(env_name)
