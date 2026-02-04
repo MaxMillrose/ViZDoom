@@ -13,9 +13,9 @@
 
     <link rel="shortcut icon" href="../../../_static/favicon.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Utilities - ViZDoom Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=49cbaffd" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
 
@@ -213,12 +213,13 @@
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/python_quickstart/">Python quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction/building/">Building from source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/apis_and_wrappers/">APIs and wrappers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../">Python API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Python API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../enums/">Enums</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../exceptions/">Exceptions</a></li>
@@ -227,6 +228,8 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../cpp/">C++ API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of C++ API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cpp/doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpp/game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/exceptions/">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/utils/">Utilities</a></li>
@@ -237,8 +240,14 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/default/">Default scenarios/environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/original_doom_levels/">Playing original Doom levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/third_party/">Third-party environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/creating_custom/">Creating a custom environment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Dev guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/dev_guide/">ViZDoom Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/building_from_source/">Building ViZDoom from source</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
@@ -310,33 +319,34 @@
             <section class="tex2jax_ignore mathjax_ignore" id="utilities">
 <h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h1>
 <p>Here we document the helpers functions that are not part of any object.
-They mostly help to deal with conversion of Doom’s engine types.</p>
+They mostly help to deal with conversion of Doom’s engine types.
+The declarations of all the enums can be found in the <code class="docutils literal notranslate"><span class="pre">include/ViZDoomUtils.h</span></code> header file.</p>
 <section id="time-conversion-functions">
 <h2>Time conversion functions<a class="headerlink" href="#time-conversion-functions" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="vizdoom.doom_tics_to_ms">
-<span class="sig-name descname"><span class="pre">doom_tics_to_ms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.doom_tics_to_ms" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">doom_tics_to_ms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.doom_tics_to_ms" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates how many tics will be made during given number of milliseconds.</p>
 <p>Note: changed in 1.1.0</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vizdoom.ms_to_doom_tics">
-<span class="sig-name descname"><span class="pre">ms_to_doom_tics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.ms_to_doom_tics" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ms_to_doom_tics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.ms_to_doom_tics" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the number of milliseconds that will pass during specified number of tics.</p>
 <p>Note: changed in 1.1.0</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vizdoom.doom_tics_to_sec">
-<span class="sig-name descname"><span class="pre">doom_tics_to_sec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.doom_tics_to_sec" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">doom_tics_to_sec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.doom_tics_to_sec" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates how many tics will be made during given number of seconds.</p>
 <p>Note: added in 1.1.0</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="vizdoom.sec_to_doom_tics">
-<span class="sig-name descname"><span class="pre">sec_to_doom_tics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.sec_to_doom_tics" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sec_to_doom_tics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doom_tics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsInt</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#vizdoom.sec_to_doom_tics" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the number of seconds that will pass during specified number of tics.</p>
 <p>Note: added in 1.1.0</p>
 </dd></dl>
@@ -349,14 +359,14 @@ They mostly help to deal with conversion of Doom’s engine types.</p>
 <span class="sig-name descname"><span class="pre">doom_fixed_to_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vizdoom.doom_fixed_to_float" title="Link to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>doom_fixed_to_float(doom_fixed: int) -&gt; float</p></li>
+<li><p>doom_fixed_to_float(doom_fixed: typing.SupportsInt) -&gt; float</p></li>
 </ol>
 <p>Converts fixed point numeral to a floating point value.
 Doom engine internally use fixed point numbers.
 If you assign fixed point numeral to <code class="docutils literal notranslate"><span class="pre">USER1</span></code> - <code class="docutils literal notranslate"><span class="pre">USER60</span></code> GameVariables,
 you can convert them to floating point by using this function.</p>
 <ol class="arabic simple" start="2">
-<li><p>doom_fixed_to_float(doom_fixed: float) -&gt; float</p></li>
+<li><p>doom_fixed_to_float(doom_fixed: typing.SupportsFloat) -&gt; float</p></li>
 </ol>
 <p>Converts fixed point numeral to a floating point value.
 Doom engine internally use fixed point numbers.
@@ -377,6 +387,16 @@ you can convert them to floating point by using this function.</p>
 <dt class="sig sig-object py" id="vizdoom.is_delta_button">
 <span class="sig-name descname"><span class="pre">is_delta_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">button</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../enums/#vizdoom.Button" title="vizdoom.Button"><span class="pre">vizdoom.Button</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#vizdoom.is_delta_button" title="Link to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <a class="reference internal" href="../enums/#vizdoom.Button" title="vizdoom.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a> is delta button.</p>
+</dd></dl>
+
+</section>
+<section id="category-functions">
+<h2>Category functions<a class="headerlink" href="#category-functions" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="vizdoom.get_default_categories">
+<span class="sig-name descname"><span class="pre">get_default_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#vizdoom.get_default_categories" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the default object categories of ViZDoom.</p>
+<p>Note: added in 1.3.0.</p>
 </dd></dl>
 
 </section>
@@ -415,7 +435,7 @@ you can convert them to floating point by using this function.</p>
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2023 Farama Foundation
+                Copyright &#169; 2025 Farama Foundation
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
@@ -466,6 +486,10 @@ you can convert them to floating point by using this function.</p>
 <li><a class="reference internal" href="#button-functions">Button functions</a><ul>
 <li><a class="reference internal" href="#vizdoom.is_binary_button"><code class="docutils literal notranslate"><span class="pre">is_binary_button()</span></code></a></li>
 <li><a class="reference internal" href="#vizdoom.is_delta_button"><code class="docutils literal notranslate"><span class="pre">is_delta_button()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#category-functions">Category functions</a><ul>
+<li><a class="reference internal" href="#vizdoom.get_default_categories"><code class="docutils literal notranslate"><span class="pre">get_default_categories()</span></code></a></li>
 </ul>
 </li>
 </ul>

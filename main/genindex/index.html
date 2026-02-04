@@ -11,9 +11,9 @@
         <link rel="canonical" href="https://vizdoom.farama.org/genindex.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 --><title>Index - ViZDoom Documentation</title>
-<link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+<link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=3e7f4c72" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=49cbaffd" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
 
@@ -211,12 +211,13 @@
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/python_quickstart/">Python quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../introduction/building/">Building from source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/apis_and_wrappers/">APIs and wrappers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/python/">Python API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Python API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/python/game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/python/enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/python/utils/">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/python/exceptions/">Exceptions</a></li>
@@ -225,6 +226,8 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/cpp/">C++ API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of C++ API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/cpp/doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/cpp/game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/cpp/enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/cpp/exceptions/">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/cpp/utils/">Utilities</a></li>
@@ -235,8 +238,14 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../environments/default/">Default scenarios/environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/original_doom_levels/">Playing original Doom levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../environments/third_party/">Third-party environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../environments/creating_custom/">Creating a custom environment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Dev guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/dev_guide/">ViZDoom Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/building_from_source/">Building ViZDoom from source</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
@@ -405,6 +414,8 @@
 </li>
         <li><a href="../api/python/enums/#vizdoom.GameVariable">GameVariable (class in vizdoom)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_armor_reward">get_armor_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_audio_buffer_size">get_audio_buffer_size() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_audio_sampling_rate">get_audio_sampling_rate() (in module vizdoom.DoomGame)</a>
@@ -421,7 +432,27 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_button_max_value">get_button_max_value() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_damage_made_reward">get_damage_made_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_damage_taken_penalty">get_damage_taken_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_damage_taken_reward">get_damage_taken_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_death_penalty">get_death_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_death_reward">get_death_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/utils/#vizdoom.get_default_categories">get_default_categories() (in module vizdoom)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_doom_config_path">get_doom_config_path() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_doom_game_path">get_doom_game_path() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_doom_map">get_doom_map() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_doom_scenario_path">get_doom_scenario_path() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_doom_skill">get_doom_skill() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_episode_start_time">get_episode_start_time() (in module vizdoom.DoomGame)</a>
 </li>
@@ -429,11 +460,25 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_episode_timeout">get_episode_timeout() (in module vizdoom.DoomGame)</a>
 </li>
-        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_game_args">get_game_args() (in module vizdoom.DoomGame)</a>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_frag_reward">get_frag_reward() (in module vizdoom.DoomGame)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_game_args">get_game_args() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_game_variable">get_game_variable() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_health_reward">get_health_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_hit_reward">get_hit_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_hit_taken_penalty">get_hit_taken_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_hit_taken_reward">get_hit_taken_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_item_reward">get_item_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_kill_reward">get_kill_reward() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_last_action">get_last_action() (in module vizdoom.DoomGame)</a>
 </li>
@@ -441,7 +486,11 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_living_reward">get_living_reward() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_map_exit_reward">get_map_exit_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_mode">get_mode() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_notifications_buffer_size">get_notifications_buffer_size() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_screen_channels">get_screen_channels() (in module vizdoom.DoomGame)</a>
 </li>
@@ -455,6 +504,8 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_screen_width">get_screen_width() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_secret_reward">get_secret_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_seed">get_seed() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_server_state">get_server_state() (in module vizdoom.DoomGame)</a>
@@ -464,6 +515,8 @@
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_ticrate">get_ticrate() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_total_reward">get_total_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.get_vizdoom_path">get_vizdoom_path() (in module vizdoom.DoomGame)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -501,15 +554,17 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_episode_finished">is_episode_finished() (in module vizdoom.DoomGame)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_episode_timeout_reached">is_episode_timeout_reached() (in module vizdoom.DoomGame)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_labels_buffer_enabled">is_labels_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_multiplayer_game">is_multiplayer_game() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_new_episode">is_new_episode() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_notifications_buffer_enabled">is_notifications_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.is_objects_info_enabled">is_objects_info_enabled() (in module vizdoom.DoomGame)</a>
 </li>
@@ -575,9 +630,11 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../api/python/game_state/#vizdoom.Object.name">name (Object property)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.new_episode">new_episode() (in module vizdoom.DoomGame)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.new_episode">new_episode() (in module vizdoom.DoomGame)</a>
+        <li><a href="../api/python/game_state/#vizdoom.GameState.notifications_buffer">notifications_buffer (GameState property)</a>
 </li>
         <li><a href="../api/python/game_state/#vizdoom.GameState.number">number (GameState property)</a>
 </li>
@@ -592,6 +649,8 @@
         <li><a href="../api/python/game_state/#vizdoom.Object">Object (class in vizdoom)</a>
 </li>
         <li><a href="../api/python/game_state/#vizdoom.Label.object_angle">object_angle (Label property)</a>
+</li>
+        <li><a href="../api/python/game_state/#vizdoom.Label.object_category">object_category (Label property)</a>
 </li>
         <li><a href="../api/python/game_state/#vizdoom.Label.object_id">object_id (Label property)</a>
 </li>
@@ -699,6 +758,8 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_action">set_action() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_armor_reward">set_armor_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_audio_buffer_enabled">set_audio_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_audio_buffer_size">set_audio_buffer_size() (in module vizdoom.DoomGame)</a>
@@ -708,6 +769,8 @@
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_automap_buffer_enabled">set_automap_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_automap_mode">set_automap_mode() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_automap_render_objects_as_sprites">set_automap_render_objects_as_sprites() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_automap_render_textures">set_automap_render_textures() (in module vizdoom.DoomGame)</a>
 </li>
@@ -719,9 +782,19 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_button_max_value">set_button_max_value() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_config">set_config() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_console_enabled">set_console_enabled() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_damage_made_reward">set_damage_made_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_damage_taken_penalty">set_damage_taken_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_damage_taken_reward">set_damage_taken_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_death_penalty">set_death_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_death_reward">set_death_reward() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_depth_buffer_enabled">set_depth_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
@@ -735,19 +808,39 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_doom_skill">set_doom_skill() (in module vizdoom.DoomGame)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_episode_start_time">set_episode_start_time() (in module vizdoom.DoomGame)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_episode_timeout">set_episode_timeout() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_frag_reward">set_frag_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_game_args">set_game_args() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_health_reward">set_health_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_hit_reward">set_hit_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_hit_taken_penalty">set_hit_taken_penalty() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_hit_taken_reward">set_hit_taken_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_item_reward">set_item_reward() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_kill_reward">set_kill_reward() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_labels_buffer_enabled">set_labels_buffer_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_living_reward">set_living_reward() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_map_exit_reward">set_map_exit_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_mode">set_mode() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_notifications_buffer_enabled">set_notifications_buffer_enabled() (in module vizdoom.DoomGame)</a>
+</li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_notifications_buffer_size">set_notifications_buffer_size() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_objects_info_enabled">set_objects_info_enabled() (in module vizdoom.DoomGame)</a>
 </li>
@@ -777,6 +870,8 @@
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_screen_resolution">set_screen_resolution() (in module vizdoom.DoomGame)</a>
 </li>
+        <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_secret_reward">set_secret_reward() (in module vizdoom.DoomGame)</a>
+</li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_sectors_info_enabled">set_sectors_info_enabled() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_seed">set_seed() (in module vizdoom.DoomGame)</a>
@@ -790,8 +885,6 @@
         <li><a href="../api/python/doom_game/#vizdoom.DoomGame.set_window_visible">set_window_visible() (in module vizdoom.DoomGame)</a>
 </li>
         <li><a href="../api/python/exceptions/#vizdoom.SharedMemoryException">SharedMemoryException</a>
-</li>
-        <li><a href="../api/python/exceptions/#vizdoom.SignalException">SignalException</a>
 </li>
         <li><a href="../api/python/gymnasium/#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.step">step() (VizdoomEnv method)</a>
 </li>
@@ -832,6 +925,8 @@
         <li><a href="../api/python/exceptions/#vizdoom.ViZDoomErrorException">ViZDoomErrorException</a>
 </li>
         <li><a href="../api/python/exceptions/#vizdoom.ViZDoomIsNotRunningException">ViZDoomIsNotRunningException</a>
+</li>
+        <li><a href="../api/python/exceptions/#vizdoom.ViZDoomNoOpenALSoundException">ViZDoomNoOpenALSoundException</a>
 </li>
         <li><a href="../api/python/exceptions/#vizdoom.ViZDoomUnexpectedExitException">ViZDoomUnexpectedExitException</a>
 </li>
@@ -893,7 +988,7 @@
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2023 Farama Foundation
+                Copyright &#169; 2025 Farama Foundation
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s

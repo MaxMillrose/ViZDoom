@@ -8,14 +8,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:description" content="" />
     <meta property="og:url" content="https://vizdoom.farama.org/api/cpp/doom_game.html" /><meta property="og:image" content="https://vizdoom.farama.org/_static/img/vizdoom-github.png" /><meta name="twitter:card" content="summary_large_image"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../genindex/" /><link rel="search" title="Search" href="../../../search/" />
+<link rel="index" title="Index" href="../../../genindex/" /><link rel="search" title="Search" href="../../../search/" /><link rel="next" title="GameState" href="../game_state/" /><link rel="prev" title="C++ API" href="../" />
         <link rel="canonical" href="https://vizdoom.farama.org/api/cpp/doom_game.html" />
 
     <link rel="shortcut icon" href="../../../_static/favicon.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>DoomGame - ViZDoom Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=49cbaffd" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
 
@@ -213,12 +213,13 @@
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/python_quickstart/">Python quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction/building/">Building from source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/apis_and_wrappers/">APIs and wrappers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../python/">Python API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Python API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../python/enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../python/utils/">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../python/exceptions/">Exceptions</a></li>
@@ -226,7 +227,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../python/gym/">OpenAI Gym Env</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../">C++ API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of C++ API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../">C++ API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of C++ API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../exceptions/">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/">Utilities</a></li>
@@ -237,8 +240,14 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/default/">Default scenarios/environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/original_doom_levels/">Playing original Doom levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/third_party/">Third-party environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/creating_custom/">Creating a custom environment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Dev guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/dev_guide/">ViZDoom Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/building_from_source/">Building ViZDoom from source</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
@@ -309,7 +318,9 @@
             
             <section class="tex2jax_ignore mathjax_ignore" id="doomgame">
 <h1>DoomGame<a class="headerlink" href="#doomgame" title="Link to this heading">¶</a></h1>
-<p>DoomGame is the main object of the ViZDoom library, representing a single instance of the Doom game and providing the interface for a single agent/player to interact with the game. The object allows sending actions to the game, getting the game state, etc. The declarations of this class and its methods can be found in the <code class="docutils literal notranslate"><span class="pre">include/ViZDoomGame.h</span></code> header file.</p>
+<p>DoomGame is the main object of the ViZDoom library, representing a single instance of the Doom game and providing the interface for a single agent/player to interact with the game.
+The object allows sending actions to the game, getting the game state, etc.
+The declarations of this class and its methods can be found in the <code class="docutils literal notranslate"><span class="pre">include/ViZDoomGame.h</span></code> header file.</p>
 <p>Here we document all the methods of the DoomGame class and their corresponding Python bindings implemented as pybind11 module.</p>
 <section id="flow-control-methods">
 <h2>Flow control methods<a class="headerlink" href="#flow-control-methods" title="Link to this heading">¶</a></h2>
@@ -505,7 +516,7 @@ All rewards, variables, and states are available when replaying the episode.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p>`set_action(action: list</p></td>
+<td class="text-left"><p>`set_action(action: list[float]</p></td>
 </tr>
 </tbody>
 </table>
@@ -550,7 +561,7 @@ To get the new state, use <a class="reference internal" href="#getstate"><span c
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p>`make_action(actions: list</p></td>
+<td class="text-left"><p>`make_action(actions: list[float]</p></td>
 </tr>
 </tbody>
 </table>
@@ -698,7 +709,7 @@ Some commands will be blocked in some modes.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>C++</p></th>
-<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">GameStatePtr</span> <span class="pre">(std::shared_ptr&lt;GameState&gt;)</span> <span class="pre">GameState</span> <span class="pre">getState()</span></code></p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">GameStatePtr</span> <span class="pre">(std::shared_ptr&lt;GameState&gt;)</span> <span class="pre">getState()</span></code></p></th>
 </tr>
 </thead>
 <tbody>
@@ -708,7 +719,7 @@ Some commands will be blocked in some modes.</p>
 </tbody>
 </table>
 </div>
-<p>Returns <a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> object with the current game state.
+<p>Returns <a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> object with the current game state.
 If the current episode is finished, <code class="docutils literal notranslate"><span class="pre">nullptr/null/None</span></code> will be returned.</p>
 <p>Note: Changed in 1.1.0</p>
 </section>
@@ -719,17 +730,17 @@ If the current episode is finished, <code class="docutils literal notranslate"><
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>C++</p></th>
-<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">ServerStatePtr</span> <span class="pre">(std::shared_ptr&lt;ServerState&gt;)</span> <span class="pre">ServerState</span> <span class="pre">getServerState()</span></code></p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">ServerStatePtr</span> <span class="pre">(std::shared_ptr&lt;ServerState&gt;)</span> <span class="pre">getServerState()</span></code></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_state_state()</span> <span class="pre">-&gt;</span> <span class="pre">ServerState</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_server_state()</span> <span class="pre">-&gt;</span> <span class="pre">ServerState</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Returns <a class="reference internal" href="#./gameState.md#serverstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">ServerState</span></code></span></a> object with the current server state.</p>
+<p>Returns <a class="reference internal" href="../game_state/#serverstate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">ServerState</span></code></span></a> object with the current server state.</p>
 <p>Note: added in 1.1.6.</p>
 </section>
 <hr class="docutils" />
@@ -850,13 +861,14 @@ that were added with <a class="reference internal" href="#setavailablebuttons"><
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p>`add_available_buttons(buttons: list</p></td>
+<td class="text-left"><p>`add_available_buttons(buttons: list[Button]</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>Sets given list of <a class="reference internal" href="../enums/#button"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">Button</span></code></span></a> s (e.g. <code class="docutils literal notranslate"><span class="pre">TURN_LEFT</span></code>, <code class="docutils literal notranslate"><span class="pre">MOVE_FORWARD</span></code>) as available buttons.</p>
 <p>Has no effect when the game is running.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">[]</span></code> (empty vector/list, no buttons).</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">availableButtons</span></code>/<code class="docutils literal notranslate"><span class="pre">available_buttons</span></code> (list of values)</p>
 </section>
 <hr class="docutils" />
@@ -941,6 +953,7 @@ If the given button has already been added, it will not be added again, but the 
 Setting the maximum value to 0 results in no constraint at all (infinity).
 This method makes sense only for delta buttons.
 The constraints limit applies in all Modes.</p>
+<p>Default value: 0 (no constraint, infinity).</p>
 <p>Has no effect when the game is running.</p>
 </section>
 <hr class="docutils" />
@@ -1015,13 +1028,14 @@ that were added with <a class="reference internal" href="#setavailablegamevariab
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p>`set_available_game_variables(variables: list</p></td>
+<td class="text-left"><p>`set_available_game_variables(variables: list[GameVariable]</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Sets list of <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> s as available game variables in the <a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
+<p>Sets list of <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> s as available game variables in the <a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
 <p>Has no effect when the game is running.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">[]</span></code> (empty vector/list, no game variables).</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">availableGameVariables</span></code>/<code class="docutils literal notranslate"><span class="pre">available_game_variables</span></code> (list of values)</p>
 </section>
 <hr class="docutils" />
@@ -1041,7 +1055,7 @@ that were added with <a class="reference internal" href="#setavailablegamevariab
 </tbody>
 </table>
 </div>
-<p>Adds the specified <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> to the list of available game variables (e.g. <code class="docutils literal notranslate"><span class="pre">HEALTH</span></code>, <code class="docutils literal notranslate"><span class="pre">AMMO1</span></code>, <code class="docutils literal notranslate"><span class="pre">ATTACK_READY</span></code>) in the <a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
+<p>Adds the specified <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> to the list of available game variables (e.g. <code class="docutils literal notranslate"><span class="pre">HEALTH</span></code>, <code class="docutils literal notranslate"><span class="pre">AMMO1</span></code>, <code class="docutils literal notranslate"><span class="pre">ATTACK_READY</span></code>) in the <a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
 <p>Has no effect when the game is running.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">availableGameVariables</span></code>/<code class="docutils literal notranslate"><span class="pre">available_game_variables</span></code> (list of values)</p>
 </section>
@@ -1062,7 +1076,7 @@ that were added with <a class="reference internal" href="#setavailablegamevariab
 </tbody>
 </table>
 </div>
-<p>Clears the list of available <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> s that are included in the <a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
+<p>Clears the list of available <a class="reference internal" href="../enums/#gamevariable"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameVariable</span></code></span></a> s that are included in the <a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a> returned by <a class="reference internal" href="#getstate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getState</span></code></span></a> method.</p>
 <p>Has no effect when the game is running.</p>
 </section>
 <hr class="docutils" />
@@ -1129,6 +1143,7 @@ It could be used for e.g. shaping. Returns 0 in case of not finding given <a cla
 It is useful for changing additional game settings.
 Use with caution, as in rare cases it may prevent the library from working properly.
 Using this method is equivalent to first calling <a class="reference internal" href="#cleargameargs"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">clearGameArgs</span></code></span></a> and then <a class="reference internal" href="#addgameargs"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">addGameArgs</span></code></span></a>.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (empty string, no additional arguments).</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">gameArgs</span></code>/<code class="docutils literal notranslate"><span class="pre">game_args</span></code></p>
 <p>See also:</p>
 <ul class="simple">
@@ -1285,6 +1300,613 @@ Use with caution, as in rare cases it may prevent the library from working prope
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">deathPenalty</span></code>/<code class="docutils literal notranslate"><span class="pre">death_penalty</span></code></p>
 </section>
 <hr class="docutils" />
+<section id="getdeathreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getDeathReward</span></code><a class="headerlink" href="#getdeathreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getDeathReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_death_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward for the player’s death. It is equal to negation of value returned by <a class="reference internal" href="#getdeathreward"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getDeathReward</span></code></span></a>.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setdeathreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setDeathReward</span></code><a class="headerlink" href="#setdeathreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setDeathReward(double</span> <span class="pre">deathReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_death_reward(death_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets a reward for the player’s death. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">deathReward</span></code>/<code class="docutils literal notranslate"><span class="pre">death_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getmapexitreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getMapExitReward</span></code><a class="headerlink" href="#getmapexitreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getMapExitReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_map_exit_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward for finishing a map.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setmapexitreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setMapExitReward</span></code><a class="headerlink" href="#setmapexitreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setMapExitReward(double</span> <span class="pre">mapExitReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_map_exit_reward(map_exit_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets a reward for finishing a map (finding an exit or succeeding in other programmed objective). A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">mapExitReward</span></code>/<code class="docutils literal notranslate"><span class="pre">map_exit_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getkillreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getKillReward</span></code><a class="headerlink" href="#getkillreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getKillReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_kill_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for killing an enemy.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setkillreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setKillReward</span></code><a class="headerlink" href="#setkillreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setKillReward(double</span> <span class="pre">killReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_kill_reward(kill_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for killing an enemy. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">killReward</span></code>/<code class="docutils literal notranslate"><span class="pre">kill_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getitemreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getItemReward</span></code><a class="headerlink" href="#getitemreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getItemReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_item_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for picking up an item.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setitemreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setItemReward</span></code><a class="headerlink" href="#setitemreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setItemReward(double</span> <span class="pre">itemReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_item_reward(item_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for picking up an item. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">itemReward</span></code>/<code class="docutils literal notranslate"><span class="pre">item_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getsecretreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getSecretReward</span></code><a class="headerlink" href="#getsecretreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getSecretReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_secret_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for discovering a secret.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setsecretreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setSecretReward</span></code><a class="headerlink" href="#setsecretreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setSecretReward(double</span> <span class="pre">secretReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_secret_reward(secret_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for discovering a secret. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">secretReward</span></code>/<code class="docutils literal notranslate"><span class="pre">secret_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getfragreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getFragReward</span></code><a class="headerlink" href="#getfragreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getFragReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_frag_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for scoring a frag (killing another player in multiplayer).</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setfragreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setFragReward</span></code><a class="headerlink" href="#setfragreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setFragReward(double</span> <span class="pre">fragReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_frag_reward(frag_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for scoring a frag. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">fragReward</span></code>/<code class="docutils literal notranslate"><span class="pre">frag_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="gethitreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getHitReward</span></code><a class="headerlink" href="#gethitreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getHitReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_hit_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for hitting (damaging) an enemy.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="sethitreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setHitReward</span></code><a class="headerlink" href="#sethitreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setHitReward(double</span> <span class="pre">hitReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_hit_reward(hit_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for hitting (damaging) an enemy.
+The reward is the same despite the amount of damage dealt.
+A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">hitReward</span></code>/<code class="docutils literal notranslate"><span class="pre">hit_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="gethittakenreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getHitTakenReward</span></code><a class="headerlink" href="#gethittakenreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getHitTakenReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_hit_taken_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player when hit (damaged) by an enemy.
+The reward is the same despite the amount of damage taken.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="sethittakenreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setHitTakenReward</span></code><a class="headerlink" href="#sethittakenreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setHitTakenReward(double</span> <span class="pre">hitTakenReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_hit_taken_reward(hit_taken_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player when hit (damaged) by an enemy.
+The reward is the same despite the amount of damage taken.
+A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">hitTakenReward</span></code>/<code class="docutils literal notranslate"><span class="pre">hit_taken_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="gethittakenpenalty">
+<h3><code class="docutils literal notranslate"><span class="pre">getHitTakenPenalty</span></code><a class="headerlink" href="#gethittakenpenalty" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getHitTakenPenalty()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_hit_taken_penalty()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the penalty for the player when hit (damaged) by an enemy.
+The penalty is the same despite the amount of damage taken.
+It is equal to negation of value returned by <a class="reference internal" href="#gethittakenreward"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getHitTakenReward</span></code></span></a>.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="sethittakenpenalty">
+<h3><code class="docutils literal notranslate"><span class="pre">setHitTakenPenalty</span></code><a class="headerlink" href="#sethittakenpenalty" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setHitTakenPenalty(double</span> <span class="pre">hitTakenPenalty)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_hit_taken_penalty(hit_taken_penalty:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets a penalty for the player when hit (damaged) by an enemy.
+The penalty is the same despite the amount of damage taken.
+Note that in case of a negative value, the player will be rewarded upon being hit.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">hitTakenPenalty</span></code>/<code class="docutils literal notranslate"><span class="pre">hit_taken_penalty</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getdamagemadereward">
+<h3><code class="docutils literal notranslate"><span class="pre">getDamageMadeReward</span></code><a class="headerlink" href="#getdamagemadereward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getDamageMadeReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_damage_made_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for damaging an enemy, proportional to the damage dealt.
+Every point of damage dealt to an enemy will result in a reward equal to the value returned by this method.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setdamagemadereward">
+<h3><code class="docutils literal notranslate"><span class="pre">setDamageMadeReward</span></code><a class="headerlink" href="#setdamagemadereward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setDamageMadeReward(double</span> <span class="pre">damageMadeReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_damage_made_reward(damage_made_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for damaging an enemy, proportional to the damage dealt.
+Every point of damage dealt to an enemy will result in a reward equal to the value returned by this method.
+A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">damageMadeReward</span></code>/<code class="docutils literal notranslate"><span class="pre">damage_made_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getdamagetakenreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getDamageTakenReward</span></code><a class="headerlink" href="#getdamagetakenreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getDamageTakenReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_damage_taken_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player when damaged by an enemy, proportional to the damage received.
+Every point of damage taken will result in a reward equal to the value returned by this method.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setdamagetakenreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setDamageTakenReward</span></code><a class="headerlink" href="#setdamagetakenreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setDamageTakenReward(double</span> <span class="pre">DamageTakenReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_damage_taken_reward(damage_taken_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player when damaged by an enemy, proportional to the damage received.
+Every point of damage taken will result in a reward equal to the set value.
+A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">damageTakenReward</span></code>/<code class="docutils literal notranslate"><span class="pre">damage_taken_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getdamagetakenpenalty">
+<h3><code class="docutils literal notranslate"><span class="pre">getDamageTakenPenalty</span></code><a class="headerlink" href="#getdamagetakenpenalty" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getDamageTakenPenalty()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_damage_taken_penalty()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the penalty for the player when damaged by an enemy, proportional to the damage received.
+Every point of damage taken will result in a penalty equal to the value returned by this method.
+It is equal to negation of value returned by <a class="reference internal" href="#getdamagetakenreward"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">getDamageTakenReward</span></code></span></a>.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setdamagetakenpenalty">
+<h3><code class="docutils literal notranslate"><span class="pre">setDamageTakenPenalty</span></code><a class="headerlink" href="#setdamagetakenpenalty" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setDamageTakenPenalty(double</span> <span class="pre">DamageTakenPenalty)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_damage_taken_penalty(damage_taken_penalty:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets a penalty for the player when damaged by an enemy, proportional to the damage received.
+Every point of damage taken will result in a penalty equal to the set value.
+Note that in case of a negative value, the player will be rewarded upon receiving damage.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">damageTakenPenalty</span></code>/<code class="docutils literal notranslate"><span class="pre">damage_taken_penalty</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="gethealthreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getHealthReward</span></code><a class="headerlink" href="#gethealthreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getHealthReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_health_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for getting health points.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="sethealthreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setHealthReward</span></code><a class="headerlink" href="#sethealthreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setHealthReward(double</span> <span class="pre">healthReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_health_reward(health_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for getting health points. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">healthReward</span></code>/<code class="docutils literal notranslate"><span class="pre">health_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="getarmorreward">
+<h3><code class="docutils literal notranslate"><span class="pre">getArmorReward</span></code><a class="headerlink" href="#getarmorreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">getArmorReward()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_armor_reward()</span> <span class="pre">-&gt;</span> <span class="pre">float</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the reward granted to the player for getting armor points.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
+<section id="setarmorreward">
+<h3><code class="docutils literal notranslate"><span class="pre">setArmorReward</span></code><a class="headerlink" href="#setarmorreward" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setArmorReward(double</span> <span class="pre">armorReward)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_armor_reward(armor_reward:</span> <span class="pre">float)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the reward granted to the player for getting armor points. A negative value is also allowed.</p>
+<p>Default value: 0</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">armorReward</span></code>/<code class="docutils literal notranslate"><span class="pre">armor_reward</span></code></p>
+<p>Note: added in 1.3.0</p>
+</section>
+<hr class="docutils" />
 <section id="getlastreward">
 <h3><code class="docutils literal notranslate"><span class="pre">getLastReward</span></code><a class="headerlink" href="#getlastreward" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -1347,6 +1969,96 @@ Overwriting does not involve resetting to default values. Thus only overlapping 
 The method returns true if the whole configuration file was correctly read and applied,
 false if the file contained errors.</p>
 <p>If the file relative path is given, it will be searched for in the following order: <code class="docutils literal notranslate"><span class="pre">&lt;current</span> <span class="pre">directory&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;current</span> <span class="pre">directory&gt;/scenarios/</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;ViZDoom</span> <span class="pre">library</span> <span class="pre">location&gt;/scenarios/</span></code>.</p>
+<p>Relative paths in the config file (e.g. for <code class="docutils literal notranslate"><span class="pre">doom_scenario_path</span></code>) are resolved relative to the config file location.</p>
+</section>
+<section id="setconfig">
+<h3><code class="docutils literal notranslate"><span class="pre">setConfig</span></code><a class="headerlink" href="#setconfig" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">setConfig(std::string</span> <span class="pre">config)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p>`set_config(config: str</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets configuration from a config string or dictionary (Python only).</p>
+<p>This method accepts either a configuration string (in the same format as .cfg files)
+or a Python dictionary with configuration key-value pairs.</p>
+<p>When using a Python dictionary:</p>
+<ul class="simple">
+<li><p>Keys should be configuration parameter names (e.g., ‘screen_resolution’, ‘doom_skill’)</p></li>
+<li><p>Values can be:</p>
+<ul>
+<li><p>Primitive types: str, int, float, bool</p></li>
+<li><p>Enums: Button, GameVariable, ScreenResolution, ScreenFormat, SamplingRate, Mode, AutomapMode</p></li>
+<li><p>Lists: for ‘available_buttons’ and ‘available_game_variables’</p></li>
+</ul>
+</li>
+</ul>
+<p>Relative paths (e.g., for ‘doom_scenario_path’) are resolved relative to the current working directory.</p>
+<p>Python example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">game</span><span class="o">.</span><span class="n">set_config</span><span class="p">({</span>
+        <span class="s1">&#39;screen_resolution&#39;</span><span class="p">:</span> <span class="n">ScreenResolution</span><span class="o">.</span><span class="n">RES_640X480</span><span class="p">,</span>
+        <span class="s1">&#39;screen_format&#39;</span><span class="p">:</span> <span class="n">ScreenFormat</span><span class="o">.</span><span class="n">CRCGCB</span><span class="p">,</span>
+        <span class="s1">&#39;doom_skill&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;available_buttons&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Button</span><span class="o">.</span><span class="n">MOVE_LEFT</span><span class="p">,</span> <span class="n">Button</span><span class="o">.</span><span class="n">MOVE_RIGHT</span><span class="p">,</span> <span class="n">Button</span><span class="o">.</span><span class="n">ATTACK</span><span class="p">],</span>
+        <span class="s1">&#39;available_game_variables&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">GameVariable</span><span class="o">.</span><span class="n">AMMO2</span><span class="p">],</span>
+        <span class="s1">&#39;living_reward&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+<p>Returns true if the configuration was successfully applied, false if errors occurred.</p>
+<p>Note: added in 1.3.0</p>
+</section>
+<section id="id1">
+<h3><code class="docutils literal notranslate"><span class="pre">setConfig</span></code><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">setConfig(std::string</span> <span class="pre">config)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p>`set_config(config: str</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets configuration from a config string or dictionary (Python only).</p>
+<p>This method accepts either a configuration string (in the same format as .cfg files)
+or a Python dictionary with configuration key-value pairs.</p>
+<p>When using a dictionary:</p>
+<ul class="simple">
+<li><p>Keys should be configuration parameter names (e.g., ‘screen_resolution’, ‘doom_skill’)</p></li>
+<li><p>Values can be:</p>
+<ul>
+<li><p>Primitive types: str, int, float, bool</p></li>
+<li><p>Enums: Button, GameVariable, ScreenResolution, ScreenFormat, SamplingRate, Mode, AutomapMode</p></li>
+<li><p>Lists: for ‘available_buttons’ and ‘available_game_variables’</p></li>
+</ul>
+</li>
+</ul>
+<p>Relative paths (e.g., for ‘doom_scenario_path’) are resolved relative to the current working directory.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">game</span><span class="o">.</span><span class="n">set_config</span><span class="p">({</span>
+        <span class="s1">&#39;screen_resolution&#39;</span><span class="p">:</span> <span class="n">ScreenResolution</span><span class="o">.</span><span class="n">RES_640X480</span><span class="p">,</span>
+        <span class="s1">&#39;screen_format&#39;</span><span class="p">:</span> <span class="n">ScreenFormat</span><span class="o">.</span><span class="n">CRCGCB</span><span class="p">,</span>
+        <span class="s1">&#39;doom_skill&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;available_buttons&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Button</span><span class="o">.</span><span class="n">MOVE_LEFT</span><span class="p">,</span> <span class="n">Button</span><span class="o">.</span><span class="n">MOVE_RIGHT</span><span class="p">,</span> <span class="n">Button</span><span class="o">.</span><span class="n">ATTACK</span><span class="p">],</span>
+        <span class="s1">&#39;available_game_variables&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">GameVariable</span><span class="o">.</span><span class="n">AMMO2</span><span class="p">],</span>
+        <span class="s1">&#39;living_reward&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+<p>Returns true if the configuration was successfully applied, false if errors occurred.</p>
 </section>
 <hr class="docutils" />
 <section id="getmode">
@@ -1438,6 +2150,25 @@ The default Doom ticrate is 35. This value will play a game at normal speed.</p>
 <p>Note: added in 1.1.0.</p>
 </section>
 <hr class="docutils" />
+<section id="getvizdoompath">
+<h3><code class="docutils literal notranslate"><span class="pre">getViZDoomPath</span></code><a class="headerlink" href="#getvizdoompath" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">getViZDoomPath()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_vizdoom_path()</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the path to the ViZDoom engine executable vizdoom.</p>
+</section>
+<hr class="docutils" />
 <section id="setvizdoompath">
 <h3><code class="docutils literal notranslate"><span class="pre">setViZDoomPath</span></code><a class="headerlink" href="#setvizdoompath" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -1454,9 +2185,29 @@ The default Doom ticrate is 35. This value will play a game at normal speed.</p>
 </tbody>
 </table>
 </div>
-<p>Sets the path to the ViZDoom engine executable vizdoom.</p>
+<p>Sets the path to the ViZDoom engine executable vizdoom.
+We recommend not changing this path unless you know what you are doing.</p>
 <p>Default value: <code class="docutils literal notranslate"><span class="pre">&lt;ViZDoom</span> <span class="pre">library</span> <span class="pre">location&gt;/&lt;vizdoom</span> <span class="pre">or</span> <span class="pre">vizdoom.exe</span> <span class="pre">on</span> <span class="pre">Windows&gt;</span></code>.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">ViZDoomPath</span></code>/<code class="docutils literal notranslate"><span class="pre">vizdoom_path</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="getdoomgamepath">
+<h3><code class="docutils literal notranslate"><span class="pre">getDoomGamePath</span></code><a class="headerlink" href="#getdoomgamepath" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">getDoomGamePath()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_doom_game_path()</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the path to the Doom engine based game file (wad format).</p>
 </section>
 <hr class="docutils" />
 <section id="setdoomgamepath">
@@ -1475,10 +2226,30 @@ The default Doom ticrate is 35. This value will play a game at normal speed.</p>
 </tbody>
 </table>
 </div>
-<p>Sets the path to the Doom engine based game file (wad format).
-If not used DoomGame will look for doom2.wad and freedoom2.wad (in that order) in the directory of ViZDoom’s installation (where vizdoom library/pyd is).</p>
-<p>Default value: <code class="docutils literal notranslate"><span class="pre">&lt;ViZDoom</span> <span class="pre">library</span> <span class="pre">location&gt;/&lt;doom2.wad,</span> <span class="pre">doom.wad,</span> <span class="pre">freedoom2.wad,</span> <span class="pre">or</span> <span class="pre">freedoom.wad</span> <span class="pre">-</span> <span class="pre">in</span> <span class="pre">this</span> <span class="pre">order&gt;</span></code></p>
+<p>Sets the path to the Doom engine-based game file (wad format).
+If set to empty, DoomGame will look for doom2.wad, DOOM2.WAD, and freedoom2.wad (in that order) in the working directory first and then in ViZDoom’s installation directory
+(where vizdoom library/pyd is).</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">DoomGamePath</span></code>/<code class="docutils literal notranslate"><span class="pre">doom_game_path</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="getdoomscenariopath">
+<h3><code class="docutils literal notranslate"><span class="pre">getDoomScenarioPath</span></code><a class="headerlink" href="#getdoomscenariopath" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">getDoomScenarioPath()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_doom_scenario_path()</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the path to the additional scenario file (wad format).</p>
 </section>
 <hr class="docutils" />
 <section id="setdoomscenariopath">
@@ -1498,9 +2269,28 @@ If not used DoomGame will look for doom2.wad and freedoom2.wad (in that order) i
 </table>
 </div>
 <p>Sets the path to an additional scenario file (wad format).
-If not provided, the default Doom single-player maps will be loaded.</p>
+If not provided, the default maps of selected Doom engine-based game will be used.</p>
 <p>Default value: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p>
-<p>Config key: <code class="docutils literal notranslate"><span class="pre">DoomScenarioPath</span></code>/<code class="docutils literal notranslate"><span class="pre">set_doom_scenario_path</span></code></p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">DoomScenarioPath</span></code>/<code class="docutils literal notranslate"><span class="pre">doom_scenario_path</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="getdoommap">
+<h3><code class="docutils literal notranslate"><span class="pre">getDoomMap</span></code><a class="headerlink" href="#getdoommap" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">getDoomMap()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_doom_map()</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the map name to be used.</p>
 </section>
 <hr class="docutils" />
 <section id="setdoommap">
@@ -1519,9 +2309,28 @@ If not provided, the default Doom single-player maps will be loaded.</p>
 </tbody>
 </table>
 </div>
-<p>Sets the map name to be used.</p>
+<p>Sets the map name to be used. The map name is case insensitive.</p>
 <p>Default value: <code class="docutils literal notranslate"><span class="pre">&quot;map01&quot;</span></code>, if set to empty <code class="docutils literal notranslate"><span class="pre">&quot;map01&quot;</span></code> will be used.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">DoomMap</span></code>/<code class="docutils literal notranslate"><span class="pre">doom_map</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="getdoomskill">
+<h3><code class="docutils literal notranslate"><span class="pre">getDoomSkill</span></code><a class="headerlink" href="#getdoomskill" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">getDoomSkill()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_doom_skill()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the Doom game difficulty level (skill).</p>
 </section>
 <hr class="docutils" />
 <section id="setdoomskill">
@@ -1545,14 +2354,33 @@ The higher the skill, the harder the game becomes.
 Skill level affects monsters’ aggressiveness, monsters’ speed, weapon damage, ammunition quantities, etc.
 Takes effect from the next episode.</p>
 <ul class="simple">
-<li><p>1 - VERY EASY, “I’m Too Young to Die” in Doom.</p></li>
-<li><p>2 - EASY, “Hey, Not Too Rough” in Doom.</p></li>
-<li><p>3 - NORMAL, “Hurt Me Plenty” in Doom.</p></li>
-<li><p>4 - HARD, “Ultra-Violence” in Doom.</p></li>
-<li><p>5 - VERY HARD, “Nightmare!” in Doom.</p></li>
+<li><p>1 - VERY EASY, “I’m Too Young to Die” in Doom/Doom 2.</p></li>
+<li><p>2 - EASY, “Hey, Not Too Rough” in Doom/Doom 2.</p></li>
+<li><p>3 - NORMAL, “Hurt Me Plenty” in Doom/Doom 2.</p></li>
+<li><p>4 - HARD, “Ultra-Violence” in Doom/Doom 2.</p></li>
+<li><p>5 - VERY HARD, “Nightmare!” in Doom/Doom 2.
+Default value: 3</p></li>
 </ul>
-<p>Default value: 3</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">DoomSkill</span></code>/<code class="docutils literal notranslate"><span class="pre">doom_skill</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="getdoomconfigpath">
+<h3><code class="docutils literal notranslate"><span class="pre">getDoomConfigPath</span></code><a class="headerlink" href="#getdoomconfigpath" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">std::string</span> <span class="pre">getDoomConfigPath()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_doom_config_path()</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the path for ZDoom’s configuration file.</p>
 </section>
 <hr class="docutils" />
 <section id="setdoomconfigpath">
@@ -1816,7 +2644,7 @@ Depth buffer will contain noise if <code class="docutils literal notranslate"><s
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">depthBufferEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">depth_buffer_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a></p></li>
 </ul>
 <p>Note: added in 1.1.0.</p>
@@ -1858,7 +2686,7 @@ Depth buffer will contain noise if <code class="docutils literal notranslate"><s
 </tbody>
 </table>
 </div>
-<p>Enables rendering of the labels buffer, it will be available in the state with the vector of <a class="reference internal" href="#./gameState.md#label"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Label</span></code></span></a> s.
+<p>Enables rendering of the labels buffer, it will be available in the state with the vector of <a class="reference internal" href="../game_state/#label"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">Label</span></code></span></a> s.
 The buffer always has the same resolution as the screen buffer.
 LabelsBuffer will contain noise if <code class="docutils literal notranslate"><span class="pre">viz_nocheat</span></code> is enabled.</p>
 <p>Default value: false</p>
@@ -1866,7 +2694,7 @@ LabelsBuffer will contain noise if <code class="docutils literal notranslate"><s
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">labelsBufferEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">labels_buffer_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/labels.py">examples/python/labels.py</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a></p></li>
 </ul>
@@ -1916,7 +2744,8 @@ The buffer always has the same resolution as the screen buffer.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">automapBufferEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">automap_buffer_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/automap_buffer.py">examples/python/automap_buffer.py</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a>,</p></li>
 </ul>
 <p>Note: added in 1.1.0.</p>
@@ -1941,7 +2770,7 @@ The buffer always has the same resolution as the screen buffer.</p>
 <p>Sets the <a class="reference internal" href="../enums/#automapmode"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">AutomapMode</span></code></span></a> (<code class="docutils literal notranslate"><span class="pre">NORMAL</span></code>, <code class="docutils literal notranslate"><span class="pre">WHOLE</span></code>, <code class="docutils literal notranslate"><span class="pre">OBJECTS</span></code>, <code class="docutils literal notranslate"><span class="pre">OBJECTS_WITH_SIZE</span></code>),
 which determines what will be visible on it.</p>
 <p>Default value: <code class="docutils literal notranslate"><span class="pre">NORMAL</span></code></p>
-<p>Config key: <code class="docutils literal notranslate"><span class="pre">automapMode</span></code>/<code class="docutils literal notranslate"><span class="pre">set_automap_mode</span></code></p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">automapMode</span></code>/<code class="docutils literal notranslate"><span class="pre">automap_mode</span></code></p>
 <p>Note: added in 1.1.0.</p>
 </section>
 <hr class="docutils" />
@@ -1988,6 +2817,34 @@ If false, north always will be at the top of the buffer.</p>
 <p>Default value: true</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">automapRenderTextures</span></code>/<code class="docutils literal notranslate"><span class="pre">automap_render_textures</span></code></p>
 <p>Note: added in 1.1.0.</p>
+</section>
+<hr class="docutils" />
+<section id="setautomaprenderobjectsassprites">
+<h3><code class="docutils literal notranslate"><span class="pre">setAutomapRenderObjectsAsSprites</span></code><a class="headerlink" href="#setautomaprenderobjectsassprites" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setAutomapRenderObjectsAsSprites(bool</span> <span class="pre">sprites)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_automap_render_objects_as_sprites(sprites:</span> <span class="pre">bool)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Controls whether things (objects, monsters, items, etc.) are rendered as sprites or as simple triangles on the automap.</p>
+<p>When enabled (<code class="docutils literal notranslate"><span class="pre">true</span></code>), things are displayed as rotated sprites with their actual appearance. When disabled (<code class="docutils literal notranslate"><span class="pre">false</span></code>), things are shown as simple triangular markers.
+Works only with <code class="docutils literal notranslate"><span class="pre">OBJECTS</span></code> and <code class="docutils literal notranslate"><span class="pre">OBJECTS_WITH_SIZE</span></code> automap modes.</p>
+<p>Default value: false</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">automapRenderObjectsAsSprites</span></code>/<code class="docutils literal notranslate"><span class="pre">automap_render_objects_as_sprites</span></code></p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#setautomapmode"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">setAutomapMode</span></code></span></a>,</p></li>
+</ul>
+<p>Note: added in 1.3.0.</p>
 </section>
 <hr class="docutils" />
 <section id="setrenderhud">
@@ -2429,14 +3286,14 @@ ViZDoom with window disabled can be used on Linux systems without X Server.</p>
 </tbody>
 </table>
 </div>
-<p>Enables information about all <a class="reference internal" href="#./gameState.md#object"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Object</span></code></span></a> s present in the current episode/level.
+<p>Enables information about all <a class="reference internal" href="../game_state/#object"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">Object</span></code></span></a> s present in the current episode/level.
 It will be available in the state.</p>
 <p>Default value: false</p>
 <p>Has no effect when the game is running.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">objectsInfoEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">objects_info_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/objects_and_sectors.py">examples/python/objects_and_sectors.py</a>,</p></li>
 </ul>
 <p>Note: added in 1.1.8.</p>
@@ -2478,14 +3335,14 @@ It will be available in the state.</p>
 </tbody>
 </table>
 </div>
-<p>Enables information about all <a class="reference internal" href="#./gameState.md#sector"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Sector</span></code></span></a> s (map layout) present in the current episode/level.
+<p>Enables information about all <a class="reference internal" href="../game_state/#sector"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">Sector</span></code></span></a> s (map layout) present in the current episode/level.
 It will be available in the state.</p>
 <p>Default value: false</p>
 <p>Has no effect when the game is running.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">sectorsInfoEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">sectors_info_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/objects_and_sectors.py">examples/python/objects_and_sectors.py</a></p></li>
 </ul>
 <p>Note: added in 1.1.8.</p>
@@ -2535,7 +3392,7 @@ Sampling rate can be set with <a class="reference internal" href="#setaudiosampl
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">audioBufferEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">audio_buffer_enabled</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference internal" href="../enums/#sampling-rate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">SamplingRate</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/audio_buffer.py">examples/python/audio_buffer.py</a></p></li>
 </ul>
@@ -2561,7 +3418,7 @@ Sampling rate can be set with <a class="reference internal" href="#setaudiosampl
 <p>Returns the <a class="reference internal" href="../enums/#sampling-rate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">SamplingRate</span></code></span></a> of the audio buffer.</p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/audio_buffer.py">examples/python/audio_buffer.py</a></p></li>
 </ul>
 <p>Note: added in 1.1.9.</p>
@@ -2586,10 +3443,10 @@ Sampling rate can be set with <a class="reference internal" href="#setaudiosampl
 <p>Sets the <a class="reference internal" href="../enums/#sampling-rate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">SamplingRate</span></code></span></a> of the audio buffer.</p>
 <p>Default value: false</p>
 <p>Has no effect when the game is running.</p>
-<p>Config key: <code class="docutils literal notranslate"><span class="pre">audioSamplingRate</span></code>/<code class="docutils literal notranslate"><span class="pre">audio_samping_rate</span></code></p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">audioSamplingRate</span></code>/<code class="docutils literal notranslate"><span class="pre">audio_sampling_rate</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/audio_buffer.py">examples/python/audio_buffer.py</a></p></li>
 </ul>
 <p>Note: added in 1.1.9.</p>
@@ -2615,7 +3472,7 @@ Sampling rate can be set with <a class="reference internal" href="#setaudiosampl
 <p>Note: added in 1.1.9.</p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/audio_buffer.py">examples/python/audio_buffer.py</a></p></li>
 </ul>
 </section>
@@ -2626,28 +3483,132 @@ Sampling rate can be set with <a class="reference internal" href="#setaudiosampl
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>C++</p></th>
-<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setAudioBufferSize(unsigned</span> <span class="pre">int</span> <span class="pre">size)</span></code></p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setAudioBufferSize(unsigned</span> <span class="pre">int</span> <span class="pre">tics)</span></code></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p>Python</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_audio_buffer_size(size:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_audio_buffer_size(tics:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Sets the size of the audio buffer. The size is defined by a number of logic tics.
+<p>Sets the size/length of the audio buffer. The size is defined by a number of logic tics.
 After each action audio buffer will contain audio from the specified number of the last processed tics.
 Doom uses 35 ticks per second.</p>
-<p>Default value: 4</p>
+<p>Default value: 1</p>
 <p>Has no effect when the game is running.</p>
 <p>Config key: <code class="docutils literal notranslate"><span class="pre">audioBufferSize</span></code>/<code class="docutils literal notranslate"><span class="pre">audio_buffer_size</span></code></p>
 <p>See also:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#./gameState.md#gamestate"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/audio_buffer.py">examples/python/audio_buffer.py</a></p></li>
 </ul>
 <p>Note: added in 1.1.9.</p>
+</section>
+<hr class="docutils" />
+<section id="isnotificationsbufferenabled">
+<h3><code class="docutils literal notranslate"><span class="pre">isNotificationsBufferEnabled</span></code><a class="headerlink" href="#isnotificationsbufferenabled" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">isNotificationsBufferEnabled()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">is_notifications_buffer_enabled()</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns true if the notify buffer is enabled.</p>
+<p>Note: added in 1.3.0.</p>
+</section>
+<hr class="docutils" />
+<section id="setnotificationsbufferenabled">
+<h3><code class="docutils literal notranslate"><span class="pre">setNotificationsBufferEnabled</span></code><a class="headerlink" href="#setnotificationsbufferenabled" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setNotificationsBufferEnabled(bool</span> <span class="pre">notificationsBuffer)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_notifications_buffer_enabled(notifications_buffer:</span> <span class="pre">bool)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Enables notification buffer, it will be available in the state.
+The notification buffer will contain text notifications from the number of the last tics specified by <a class="reference internal" href="#setNotificationsBuffersize"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">setNotificationsBufferSize</span></code></span></a> method.</p>
+<p>Default value: false</p>
+<p>Has no effect when the game is running.</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">notificationsBufferEnabled</span></code>/<code class="docutils literal notranslate"><span class="pre">notifications_buffer_enabled</span></code></p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a></p></li>
+</ul>
+<p>Note: added in 1.3.0.</p>
+</section>
+<hr class="docutils" />
+<section id="getnotificationsbuffersize">
+<h3><code class="docutils literal notranslate"><span class="pre">getNotificationsBufferSize</span></code><a class="headerlink" href="#getnotificationsbuffersize" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getNotificationsBufferSize()</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">get_notifications_buffer_size()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Returns the size of the notify buffer.</p>
+<p>Note: added in 1.3.0.</p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="setnotificationsbuffersize">
+<h3><code class="docutils literal notranslate"><span class="pre">setNotificationsBufferSize</span></code><a class="headerlink" href="#setnotificationsbuffersize" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>C++</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">setNotificationsBufferSize(unsigned</span> <span class="pre">int</span> <span class="pre">tics)</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Python</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">set_notifications_buffer_size(tics:</span> <span class="pre">int)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sets the size of the notify buffer. The size is defined by a number of logic tics.
+After each action notify buffer will contain text notifications from the specified number of the last processed tics.
+Doom uses 35 ticks per second.</p>
+<p>Default value: 1</p>
+<p>Has no effect when the game is running.</p>
+<p>Config key: <code class="docutils literal notranslate"><span class="pre">notificationsBufferSize</span></code>/<code class="docutils literal notranslate"><span class="pre">notifications_buffer_size</span></code></p>
+<p>See also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../game_state/#gamestate"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">GameState</span></code></span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/Farama-Foundation/ViZDoom/tree/master/examples/python/buffers.py">examples/python/buffers.py</a></p></li>
+</ul>
+<p>Note: added in 1.3.0.</p>
 </section>
 </section>
 </section>
@@ -2657,13 +3618,35 @@ Doom uses 35 ticks per second.</p>
         <footer>
           
           <div class="related-pages">
-            
-            
+            <a class="next-page" href="../game_state/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">GameState</div>
+              </div>
+              <svg class="furo-related-icon">
+                <use href="#svg-arrow-right"></use>
+              </svg>
+            </a>
+            <a class="prev-page" href="../">
+              <svg class="furo-related-icon">
+                <use href="#svg-arrow-right"></use>
+              </svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">C++ API</div>
+                
+              </div>
+            </a>
           </div>
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2023 Farama Foundation
+                Copyright &#169; 2025 Farama Foundation
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
@@ -2758,21 +3741,57 @@ Doom uses 35 ticks per second.</p>
 <li><a class="reference internal" href="#setlivingreward"><code class="docutils literal notranslate"><span class="pre">setLivingReward</span></code></a></li>
 <li><a class="reference internal" href="#getdeathpenalty"><code class="docutils literal notranslate"><span class="pre">getDeathPenalty</span></code></a></li>
 <li><a class="reference internal" href="#setdeathpenalty"><code class="docutils literal notranslate"><span class="pre">setDeathPenalty</span></code></a></li>
+<li><a class="reference internal" href="#getdeathreward"><code class="docutils literal notranslate"><span class="pre">getDeathReward</span></code></a></li>
+<li><a class="reference internal" href="#setdeathreward"><code class="docutils literal notranslate"><span class="pre">setDeathReward</span></code></a></li>
+<li><a class="reference internal" href="#getmapexitreward"><code class="docutils literal notranslate"><span class="pre">getMapExitReward</span></code></a></li>
+<li><a class="reference internal" href="#setmapexitreward"><code class="docutils literal notranslate"><span class="pre">setMapExitReward</span></code></a></li>
+<li><a class="reference internal" href="#getkillreward"><code class="docutils literal notranslate"><span class="pre">getKillReward</span></code></a></li>
+<li><a class="reference internal" href="#setkillreward"><code class="docutils literal notranslate"><span class="pre">setKillReward</span></code></a></li>
+<li><a class="reference internal" href="#getitemreward"><code class="docutils literal notranslate"><span class="pre">getItemReward</span></code></a></li>
+<li><a class="reference internal" href="#setitemreward"><code class="docutils literal notranslate"><span class="pre">setItemReward</span></code></a></li>
+<li><a class="reference internal" href="#getsecretreward"><code class="docutils literal notranslate"><span class="pre">getSecretReward</span></code></a></li>
+<li><a class="reference internal" href="#setsecretreward"><code class="docutils literal notranslate"><span class="pre">setSecretReward</span></code></a></li>
+<li><a class="reference internal" href="#getfragreward"><code class="docutils literal notranslate"><span class="pre">getFragReward</span></code></a></li>
+<li><a class="reference internal" href="#setfragreward"><code class="docutils literal notranslate"><span class="pre">setFragReward</span></code></a></li>
+<li><a class="reference internal" href="#gethitreward"><code class="docutils literal notranslate"><span class="pre">getHitReward</span></code></a></li>
+<li><a class="reference internal" href="#sethitreward"><code class="docutils literal notranslate"><span class="pre">setHitReward</span></code></a></li>
+<li><a class="reference internal" href="#gethittakenreward"><code class="docutils literal notranslate"><span class="pre">getHitTakenReward</span></code></a></li>
+<li><a class="reference internal" href="#sethittakenreward"><code class="docutils literal notranslate"><span class="pre">setHitTakenReward</span></code></a></li>
+<li><a class="reference internal" href="#gethittakenpenalty"><code class="docutils literal notranslate"><span class="pre">getHitTakenPenalty</span></code></a></li>
+<li><a class="reference internal" href="#sethittakenpenalty"><code class="docutils literal notranslate"><span class="pre">setHitTakenPenalty</span></code></a></li>
+<li><a class="reference internal" href="#getdamagemadereward"><code class="docutils literal notranslate"><span class="pre">getDamageMadeReward</span></code></a></li>
+<li><a class="reference internal" href="#setdamagemadereward"><code class="docutils literal notranslate"><span class="pre">setDamageMadeReward</span></code></a></li>
+<li><a class="reference internal" href="#getdamagetakenreward"><code class="docutils literal notranslate"><span class="pre">getDamageTakenReward</span></code></a></li>
+<li><a class="reference internal" href="#setdamagetakenreward"><code class="docutils literal notranslate"><span class="pre">setDamageTakenReward</span></code></a></li>
+<li><a class="reference internal" href="#getdamagetakenpenalty"><code class="docutils literal notranslate"><span class="pre">getDamageTakenPenalty</span></code></a></li>
+<li><a class="reference internal" href="#setdamagetakenpenalty"><code class="docutils literal notranslate"><span class="pre">setDamageTakenPenalty</span></code></a></li>
+<li><a class="reference internal" href="#gethealthreward"><code class="docutils literal notranslate"><span class="pre">getHealthReward</span></code></a></li>
+<li><a class="reference internal" href="#sethealthreward"><code class="docutils literal notranslate"><span class="pre">setHealthReward</span></code></a></li>
+<li><a class="reference internal" href="#getarmorreward"><code class="docutils literal notranslate"><span class="pre">getArmorReward</span></code></a></li>
+<li><a class="reference internal" href="#setarmorreward"><code class="docutils literal notranslate"><span class="pre">setArmorReward</span></code></a></li>
 <li><a class="reference internal" href="#getlastreward"><code class="docutils literal notranslate"><span class="pre">getLastReward</span></code></a></li>
 <li><a class="reference internal" href="#gettotalreward"><code class="docutils literal notranslate"><span class="pre">getTotalReward</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#general-game-setting-methods">General game setting methods</a><ul>
 <li><a class="reference internal" href="#loadconfig"><code class="docutils literal notranslate"><span class="pre">loadConfig</span></code></a></li>
+<li><a class="reference internal" href="#setconfig"><code class="docutils literal notranslate"><span class="pre">setConfig</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">setConfig</span></code></a></li>
 <li><a class="reference internal" href="#getmode"><code class="docutils literal notranslate"><span class="pre">getMode</span></code></a></li>
 <li><a class="reference internal" href="#setmode"><code class="docutils literal notranslate"><span class="pre">setMode</span></code></a></li>
 <li><a class="reference internal" href="#getticrate"><code class="docutils literal notranslate"><span class="pre">getTicrate</span></code></a></li>
 <li><a class="reference internal" href="#setticrate"><code class="docutils literal notranslate"><span class="pre">setTicrate</span></code></a></li>
+<li><a class="reference internal" href="#getvizdoompath"><code class="docutils literal notranslate"><span class="pre">getViZDoomPath</span></code></a></li>
 <li><a class="reference internal" href="#setvizdoompath"><code class="docutils literal notranslate"><span class="pre">setViZDoomPath</span></code></a></li>
+<li><a class="reference internal" href="#getdoomgamepath"><code class="docutils literal notranslate"><span class="pre">getDoomGamePath</span></code></a></li>
 <li><a class="reference internal" href="#setdoomgamepath"><code class="docutils literal notranslate"><span class="pre">setDoomGamePath</span></code></a></li>
+<li><a class="reference internal" href="#getdoomscenariopath"><code class="docutils literal notranslate"><span class="pre">getDoomScenarioPath</span></code></a></li>
 <li><a class="reference internal" href="#setdoomscenariopath"><code class="docutils literal notranslate"><span class="pre">setDoomScenarioPath</span></code></a></li>
+<li><a class="reference internal" href="#getdoommap"><code class="docutils literal notranslate"><span class="pre">getDoomMap</span></code></a></li>
 <li><a class="reference internal" href="#setdoommap"><code class="docutils literal notranslate"><span class="pre">setDoomMap</span></code></a></li>
+<li><a class="reference internal" href="#getdoomskill"><code class="docutils literal notranslate"><span class="pre">getDoomSkill</span></code></a></li>
 <li><a class="reference internal" href="#setdoomskill"><code class="docutils literal notranslate"><span class="pre">setDoomSkill</span></code></a></li>
+<li><a class="reference internal" href="#getdoomconfigpath"><code class="docutils literal notranslate"><span class="pre">getDoomConfigPath</span></code></a></li>
 <li><a class="reference internal" href="#setdoomconfigpath"><code class="docutils literal notranslate"><span class="pre">setDoomConfigPath</span></code></a></li>
 <li><a class="reference internal" href="#getseed"><code class="docutils literal notranslate"><span class="pre">getSeed</span></code></a></li>
 <li><a class="reference internal" href="#setseed"><code class="docutils literal notranslate"><span class="pre">setSeed</span></code></a></li>
@@ -2795,6 +3814,7 @@ Doom uses 35 ticks per second.</p>
 <li><a class="reference internal" href="#setautomapmode"><code class="docutils literal notranslate"><span class="pre">setAutomapMode</span></code></a></li>
 <li><a class="reference internal" href="#setautomaprotate"><code class="docutils literal notranslate"><span class="pre">setAutomapRotate</span></code></a></li>
 <li><a class="reference internal" href="#setautomaprendertextures"><code class="docutils literal notranslate"><span class="pre">setAutomapRenderTextures</span></code></a></li>
+<li><a class="reference internal" href="#setautomaprenderobjectsassprites"><code class="docutils literal notranslate"><span class="pre">setAutomapRenderObjectsAsSprites</span></code></a></li>
 <li><a class="reference internal" href="#setrenderhud"><code class="docutils literal notranslate"><span class="pre">setRenderHud</span></code></a></li>
 <li><a class="reference internal" href="#setrenderminimalhud"><code class="docutils literal notranslate"><span class="pre">setRenderMinimalHud</span></code></a></li>
 <li><a class="reference internal" href="#setrenderweapon"><code class="docutils literal notranslate"><span class="pre">setRenderWeapon</span></code></a></li>
@@ -2824,6 +3844,10 @@ Doom uses 35 ticks per second.</p>
 <li><a class="reference internal" href="#setaudiosamplingrate"><code class="docutils literal notranslate"><span class="pre">setAudioSamplingRate</span></code></a></li>
 <li><a class="reference internal" href="#getaudiobuffersize"><code class="docutils literal notranslate"><span class="pre">getAudioBufferSize</span></code></a></li>
 <li><a class="reference internal" href="#setaudiobuffersize"><code class="docutils literal notranslate"><span class="pre">setAudioBufferSize</span></code></a></li>
+<li><a class="reference internal" href="#isnotificationsbufferenabled"><code class="docutils literal notranslate"><span class="pre">isNotificationsBufferEnabled</span></code></a></li>
+<li><a class="reference internal" href="#setnotificationsbufferenabled"><code class="docutils literal notranslate"><span class="pre">setNotificationsBufferEnabled</span></code></a></li>
+<li><a class="reference internal" href="#getnotificationsbuffersize"><code class="docutils literal notranslate"><span class="pre">getNotificationsBufferSize</span></code></a></li>
+<li><a class="reference internal" href="#setnotificationsbuffersize"><code class="docutils literal notranslate"><span class="pre">setNotificationsBufferSize</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -13,9 +13,9 @@
 
     <link rel="shortcut icon" href="../../../_static/favicon.png"/><!-- Generated with Sphinx 7.4.7 and Furo 2023.08.19.dev1 -->
         <title>Gymnasium Env - ViZDoom Documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=3e7f4c72" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=49cbaffd" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=82c8b628" />
     
     
 
@@ -213,12 +213,13 @@
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/python_quickstart/">Python quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction/building/">Building from source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction/apis_and_wrappers/">APIs and wrappers</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../">Python API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Python API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../exceptions/">Exceptions</a></li>
@@ -227,6 +228,8 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../cpp/">C++ API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of C++ API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cpp/doom_game/">DoomGame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpp/game_state/">GameState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/enums/">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/exceptions/">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../cpp/utils/">Utilities</a></li>
@@ -237,8 +240,14 @@
 <p class="caption" role="heading"><span class="caption-text">Environments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/default/">Default scenarios/environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/original_doom_levels/">Playing original Doom levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/third_party/">Third-party environments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../environments/creating_custom/">Creating a custom environment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Dev guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/dev_guide/">ViZDoom Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/building_from_source/">Building ViZDoom from source</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
@@ -311,23 +320,38 @@
 <h1>Gymnasium Env<a class="headerlink" href="#gymnasium-env" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VizdoomEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_skip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_buttons_pressed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv" title="Link to this definition">¶</a></dt>
-<dd><p>Base class for Gymnasium interface for ViZDoom. Thanks to <a class="reference external" href="https://github.com/shakenes/vizdoomgym">https://github.com/shakenes/vizdoomgym</a>
-Child classes are defined in gym_env_defns.py,</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VizdoomEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_buttons_pressed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">treat_episode_timeout_as_truncation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_multi_binary_action_space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for Gymnasium interface for ViZDoom.
+Child classes are defined in gymnasium_env_defns.py,</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>level</strong> (<em>str</em>) – The path to the config file to load. Most settings should be set by this config file.</p></li>
+<li><p><strong>config_file</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The path to the config file to load.
+Most settings should be set by this config file.
+If None, all the necessary config must be provided in <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs.</p></li>
 <li><p><strong>frame_skip</strong> (<em>int</em>) – The number of frames the will be advanced per action. 1 = take action on every frame. Default: 1.</p></li>
 <li><p><strong>max_buttons_pressed</strong> (<em>int</em>) – Defines the number of binary buttons that can be selected at once. Default: 1.
 Should be &gt;= 0. If &lt; 0 a RuntimeError is raised.
-If == 0, the binary action space becomes <code class="docutils literal notranslate"><span class="pre">MultiDiscrete([2]</span> <span class="pre">*</span> <span class="pre">num_binary_buttons)</span></code>
+If == 0, the binary action space becomes <code class="docutils literal notranslate"><span class="pre">MultiBinary(len(num_binary_buttons))</span></code>
+or <code class="docutils literal notranslate"><span class="pre">MultiDiscrete([2]</span> <span class="pre">*</span> <span class="pre">num_binary_buttons)</span></code> (depending on <code class="docutils literal notranslate"><span class="pre">use_multi_binary_action_space</span></code> flag)
 and [0, <code class="docutils literal notranslate"><span class="pre">num_binary_buttons</span></code>] number of binary buttons can be selected.
 If &gt; 0, the binary action space becomes <code class="docutils literal notranslate"><span class="pre">Discrete(n)</span></code>
 and <code class="docutils literal notranslate"><span class="pre">n</span></code> actions can be selected.
 <code class="docutils literal notranslate"><span class="pre">n</span></code> is equal to number of possible buttons combinations
 with the number of buttons pressed &lt; <code class="docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code>.</p></li>
 <li><p><strong>render_mode</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The render mode to use could be either “human” or “rgb_array”</p></li>
+<li><p><strong>skill_level</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – If specified, sets the skill level (difficulty) of the game (overrides config file).
+Valid values are 1 to 5, where 1 is the easiest and 5 is the hardest.</p></li>
+<li><p><strong>map</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – If specified, sets the map to start. Should be a valid map ID defined in the WAD file (overrides config file).</p></li>
+<li><p><strong>treat_episode_timeout_as_truncation</strong> (<em>bool</em>) – If True, the episode will be treated as truncated
+when the internal episode timeout is reached.
+This is compatibility option, ViZDoom versions &lt;1.3.0 behave as if this was set to False.
+Default: True.</p></li>
+<li><p><strong>use_multi_binary_action_space</strong> (<em>bool</em>) – If True, the <code class="docutils literal notranslate"><span class="pre">MultiBinary(len(num_binary_buttons))</span></code> action space
+will be used for buttons binary buttons instead of <code class="docutils literal notranslate"><span class="pre">MultiDiscrete([2]</span> <span class="pre">*</span> <span class="pre">len(num_binary_buttons))</span></code>.
+This is compatibility option, ViZDoom versions &lt;1.3.0 behave as if this was set to False.
+Default: True.</p></li>
+<li><p><strong>**kwargs</strong> – Additional config options to set in the DoomGame after loading the config file.</p></li>
 </ul>
 </dd>
 </dl>
@@ -344,8 +368,9 @@ For info on labels, access <cite>env.state.labels</cite> variable.</p></li>
 </ul>
 <p>Action space can be a single one of binary/continuous action space, or a <code class="docutils literal notranslate"><span class="pre">Dict</span></code> containing both:</p>
 <ul class="simple">
-<li><p>“binary”: Is <code class="docutils literal notranslate"><span class="pre">MultiDiscrete([2]</span> <span class="pre">*</span> <span class="pre">num_binary_buttons)</span></code> if <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code> == 0
-or <code class="docutils literal notranslate"><span class="pre">Discrete(num_binary_buttons</span> <span class="pre">+</span> <span class="pre">1)</span></code> if <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code> &gt;= 1.</p></li>
+<li><p>“binary”: Is <code class="docutils literal notranslate"><span class="pre">Discrete(num_binary_buttons</span> <span class="pre">+</span> <span class="pre">1)</span></code> if <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code> &gt;= 1
+or <code class="docutils literal notranslate"><span class="pre">MultiBinary(len(num_binary_buttons))</span></code> if <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code> == 0 and <code class="xref py py-attr docutils literal notranslate"><span class="pre">use_multi_binary_action_space</span></code> is True,
+or <code class="docutils literal notranslate"><span class="pre">MultiDiscrete([2]</span> <span class="pre">*</span> <span class="pre">num_binary_buttons)</span></code> if <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_buttons_pressed</span></code> == 0 and <code class="xref py py-attr docutils literal notranslate"><span class="pre">use_multi_binary_action_space</span></code> is False,</p></li>
 <li><p>“continuous”: Is <code class="docutils literal notranslate"><span class="pre">Box(float32.min,</span> <span class="pre">float32.max,</span> <span class="pre">(num_delta_buttons,),</span> <span class="pre">float32)</span></code>.</p></li>
 </ul>
 <dl class="py method">
@@ -434,7 +459,7 @@ the <code class="docutils literal notranslate"><span class="pre">info</span></co
 
 <dl class="py method">
 <dt class="sig sig-object py" id="vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.step" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.step" title="Link to this definition">¶</a></dt>
 <dd><p>Run one timestep of the environment’s dynamics using the agent actions.</p>
 <p>When the end of an episode is reached (<code class="docutils literal notranslate"><span class="pre">terminated</span> <span class="pre">or</span> <span class="pre">truncated</span></code>), it is necessary to call <a class="reference internal" href="#vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.reset" title="vizdoom.gymnasium_wrapper.base_gymnasium_env.VizdoomEnv.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset()</span></code></a> to
 reset this environment’s state for the next episode.</p>
@@ -510,7 +535,7 @@ a certain timelimit was exceeded, or the physics simulation has entered an inval
           <div class="bottom-of-page">
             <div class="left-details">
               <div class="copyright">
-                Copyright &#169; 2023 Farama Foundation
+                Copyright &#169; 2025 Farama Foundation
               </div>
               <!--
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
